@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <style>
+        body{
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: center;
+            justify-content: center;
+            background-color: #222;
+        }
+        main{
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn{
+            margin: 1rem;
+            padding: 10px;
+            width: 128px;
+        }
+    </style>
+    <title>Teste do MCU Esp8266</title>
+</head>
+<body>
+    <main>
+        <div>
+            <button class="btn on">Ligar led</button>
+        </div>
+        <div>
+            <button class="btn off">Desligar led</button>
+        </div>
+    </main>
+    <script src="requests.js"></script>
+</body>
+</html>
