@@ -6,6 +6,7 @@ let builtInLed_state = false;
 
 //função para controlar o led embutido
 const builtLedControl = () => {
+    const builtLedButton = document.getElementById('builtLedToggle');
     const xmlhttp = new XMLHttpRequest();
     const status = builtInLed_state ? "builtLed_off" : "builtLed_on";
     const setStatus = `http://${ESP8266_IP}/?function=${status}`;
@@ -19,7 +20,6 @@ const builtLedControl = () => {
             builtInLed_state = !builtInLed_state;
 
             //atualiza o conteúdo do botão com base no estado do led
-            const builtLedButton = document.getElementById('builtLedToggle');
             builtLedButton.textContent = builtInLed_state ? 'Desligar' : 'Ligar';
 
         }
@@ -32,7 +32,7 @@ const builtLedControl = () => {
 
 //configura o botão de controle do led
 const builtInLed = () => {
-    var builtLedButton = document.getElementById('builtLedToggle');
+    const builtLedButton = document.getElementById('builtLedToggle');
     builtLedButton.addEventListener("click", builtLedControl)
 }
 
