@@ -4,10 +4,18 @@
 const char *ssid = "";
 const char *password = "";
 
+/*
+ * Para definir um IP estático no módulo, basta descomentar essa sessão
+ * IPAddress local_IP(192, 168, 1, 200);  // IP estático desejado
+ * IPAddress gateway(192, 168, 1, 1); // Geralmente o IP do roteador
+ * IPAddress subnet(255, 255, 255, 0); //Máscara de subrede
+*/
+
 WiFiServer server(80);
 
+//Executado ao iniciar o módulo
 void setup() {
-    //Define a velocidade do monitor serial 115200bps
+    //Define a velocidade do monitor serial como 115200bps(bytes por segundo)
     Serial.begin(115200);
     delay(10);
 
@@ -22,6 +30,10 @@ void setup() {
     Serial.println(ssid);
 
     WiFi.begin(ssid, password);
+
+    if(local_IP && gateway && subnet){
+        WiFi.config(local_IP, gateway, subnet);
+    }
 
     Serial.print("Conectando...");
 
@@ -41,16 +53,20 @@ void setup() {
     Serial.println(WiFi.localIP());
 }
 
-//Com base na requisição, determina um valor numérico relativo a ação a ser tomada
+/*
+* @function getAction
+* @param request {String} - refere-se a XMLHttp request
+* @description - transforma a XMLHttp request em um valor número para ser usado em um switch/case
+*/
 int getAction(String request){
     if(request.indexOf("builtLed_on") != -1) return 1;
     if(request.indexOf("builtLed_off") != -1) return 2;
     return 0;
 }
 
+//Executado em loop
 void loop() {
 
-    //Cria um WiFiClient se houver
     WiFiClient client = server.available();
 
     //Se não houver cliente, o 'return' faz o programa voltar ao início do loop
@@ -69,7 +85,7 @@ void loop() {
     //Cria uma requisição como String que é lida até um caractére '\r'
     String req = client.readStringUntil('\r');
 
-    //Imprime a requisição no monitor serial
+    //Imprime a requisição no monitor serial para depuração
     Serial.println(req);
 
     //Limpa os dados do cliente
